@@ -70,6 +70,8 @@
 	</class>
 	<class name="hil_actuator_controls" type="mavros::std_plugins::HilActuatorControlsPlugin" base_class_type="mavros::plugin::PluginBase">
 		<description>Publish HIL controls values</description>
+	</class
+	<class name="voliro" type="mavros::std_plugins::VOLIROPubPlugin" base_class_type="mavros::plugin::PluginBase">
+		<description>Receives alphas and omegas from Pixhawk</description>
 	</class>
 </library>
-
