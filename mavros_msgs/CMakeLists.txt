@@ -34,6 +34,7 @@ add_message_files(
   Vibration.msg
   Waypoint.msg
   WaypointList.msg
+  voliro_ao.msg
 )
 
 add_service_files(
@@ -84,4 +85,3 @@ catkin_package(
 install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
   FILES_MATCHING PATTERN "*.h")
-

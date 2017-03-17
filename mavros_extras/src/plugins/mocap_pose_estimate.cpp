@@ -44,10 +44,10 @@ public:
 		bool use_pose;
 
 		/** @note For VICON ROS package, subscribe to TransformStamped topic */
-		mp_nh.param("use_tf", use_tf, true);
+		mp_nh.param("use_tf", use_tf, false);
 
 		/** @note For Optitrack ROS package, subscribe to PoseStamped topic */
-		mp_nh.param("use_pose", use_pose, false);
+		mp_nh.param("use_pose", use_pose, true);
 
 		if (use_tf && !use_pose) {
 			mocap_tf_sub = mp_nh.subscribe("tf", 1, &MocapPoseEstimatePlugin::mocap_tf_cb, this);
