@@ -11,7 +11,7 @@ namespace std_plugins {
 class VOLIROPubPlugin : public plugin::PluginBase {
 public:
 	VOLIROPubPlugin() : PluginBase(),
-		imu_nh("~voliro"),
+		volo_nh("~voliro"),
 		has_voliro(false)
 	{ }
 
@@ -19,7 +19,7 @@ public:
 	{
 		PluginBase::initialize(uas_);
 
-		voliro_pub = imu_nh.advertise<mavros_msgs::voliro_ao>("voliro_ao",10);
+		voliro_pub = volo_nh.advertise<mavros_msgs::voliro_ao>("voliro_ao",10);
 
 		// reset has_* flags on connection change
 		enable_connection_cb();
@@ -32,7 +32,7 @@ public:
 	}
 
 private:
-	ros::NodeHandle imu_nh;
+	ros::NodeHandle volo_nh;
 	ros::Publisher voliro_pub;
 
 	bool has_voliro;
@@ -40,7 +40,7 @@ private:
 	void handle_voliro(const mavlink::mavlink_message_t *msg, mavlink::common::msg::VOLIRO_AO &volao)
 	{
 
-		ROS_INFO_COND_NAMED(!has_voliro, "imu", "VOLIRO: VOLIRO ALPHA/OMEGA detected!");
+		ROS_INFO_COND_NAMED(!has_voliro, "voliro", "VOLIRO: VOLIRO ALPHA/OMEGA detected!");
 		has_voliro = true;
 
 		//ROS_INFO("VOLIRO WAS HERE");
@@ -61,6 +61,12 @@ private:
 		volomsg.omega[5] = volao.omega[5];
 
 		voliro_pub.publish(volomsg);
+
+		// mavros_msgs::voliro_ao volomsg;
+		// volomsg.alpha[0] = 5.0;
+		//
+		// voliro_pub.publish(volomsg);
+
 
 	}
 
