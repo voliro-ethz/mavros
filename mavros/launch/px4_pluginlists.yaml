@@ -8,5 +8,3 @@ plugin_blacklist:
 
 plugin_whitelist: []
 #- 'sys_*'
-#- mocap_pose_estimate
-#- mocap_fake_gps
