@@ -46,6 +46,7 @@ private:
 		//ROS_INFO("VOLIRO WAS HERE");
 
 		mavros_msgs::voliro_ao volomsg;
+
 		volomsg.alpha[0] = volao.alpha[0];
 		volomsg.alpha[1] = volao.alpha[1];
 		volomsg.alpha[2] = volao.alpha[2];
