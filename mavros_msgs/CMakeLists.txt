@@ -35,6 +35,9 @@ add_message_files(
   Waypoint.msg
   WaypointList.msg
   voliro_ao.msg
+  hil_gps_msg.msg
+  sensor_msg.msg
+  hil_state_quat.msg
 )
 
 add_service_files(
