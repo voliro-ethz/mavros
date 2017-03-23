@@ -80,4 +80,7 @@
 	<class name="hil_voliro" type="mavros::std_plugins::HILVoliroPlugin" base_class_type="mavros::plugin::PluginBase">
 		<description>Sends ROS messages from Gazebo to Pixhawk</description>
 	</class>
+	<class name="voliro_waypoint" type="mavros::std_plugins::VOLWaypointPlugin" base_class_type="mavros::plugin::PluginBase">
+		<description>Sends ROS messages from Gazebo to Pixhawk</description>
+	</class>
 </library>
