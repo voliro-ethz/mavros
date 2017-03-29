@@ -126,10 +126,12 @@ static const cmode_map px4_cmode_map{{
 	{ px4::define_mode(px4::custom_mode::MAIN_MODE_MANUAL),           "MANUAL" },
 	{ px4::define_mode(px4::custom_mode::MAIN_MODE_ACRO),             "ACRO" },
 	{ px4::define_mode(px4::custom_mode::MAIN_MODE_ALTCTL),           "ALTCTL" },
-	{ px4::define_mode(px4::custom_mode::MAIN_MODE_POSCTL),           "POSCTL" },
+	{ px4::define_mode(px4::custom_mode::MAIN_MODE_POSCTL),           "ACRO" },
 	{ px4::define_mode(px4::custom_mode::MAIN_MODE_OFFBOARD),         "OFFBOARD" },
 	{ px4::define_mode(px4::custom_mode::MAIN_MODE_STABILIZED),       "STABILIZED" },
 	{ px4::define_mode(px4::custom_mode::MAIN_MODE_RATTITUDE),        "RATTITUDE" },
+	{ px4::define_mode(px4::custom_mode::MAIN_MODE_VOL_AUTO),         "VOL_AUTO" },
+	{ px4::define_mode(px4::custom_mode::MAIN_MODE_VOL_MANUAL),       "VOL_MANUAL" },
 	{ px4::define_mode_auto(px4::custom_mode::SUB_MODE_AUTO_MISSION), "AUTO.MISSION" },
 	{ px4::define_mode_auto(px4::custom_mode::SUB_MODE_AUTO_LOITER),  "AUTO.LOITER" },
 	{ px4::define_mode_auto(px4::custom_mode::SUB_MODE_AUTO_RTL),     "AUTO.RTL" },
@@ -246,6 +248,7 @@ static bool cmode_find_cmap(const cmode_map &cmap, std::string &cmode_str, uint3
 
 bool UAS::cmode_from_str(std::string cmode_str, uint32_t &custom_mode)
 {
+	ROS_INFO_STREAM(cmode_str);
 	// upper case
 	std::transform(cmode_str.begin(), cmode_str.end(), cmode_str.begin(), std::ref(toupper));
 
@@ -261,8 +264,11 @@ bool UAS::cmode_from_str(std::string cmode_str, uint32_t &custom_mode)
 		else if (type == MAV_TYPE::SUBMARINE)
 			return cmode_find_cmap(ardusub_cmode_map, cmode_str, custom_mode);
 	}
-	else if (MAV_AUTOPILOT::PX4 == ap)
-		return cmode_find_cmap(px4_cmode_map, cmode_str, custom_mode);
+	else if (MAV_AUTOPILOT::PX4 == ap) {
+			bool test = cmode_find_cmap(px4_cmode_map, cmode_str, custom_mode);
+	ROS_INFO("custom mode ; %i  %i", custom_mode, px4::custom_mode::MAIN_MODE_VOL_AUTO);
+		return test;
+	}
 
 	ROS_ERROR_NAMED("uas", "MODE: Unsupported FCU");
 	return false;
