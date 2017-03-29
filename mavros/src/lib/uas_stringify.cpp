@@ -248,7 +248,6 @@ static bool cmode_find_cmap(const cmode_map &cmap, std::string &cmode_str, uint3
 
 bool UAS::cmode_from_str(std::string cmode_str, uint32_t &custom_mode)
 {
-	ROS_INFO_STREAM(cmode_str);
 	// upper case
 	std::transform(cmode_str.begin(), cmode_str.end(), cmode_str.begin(), std::ref(toupper));
 
@@ -265,9 +264,7 @@ bool UAS::cmode_from_str(std::string cmode_str, uint32_t &custom_mode)
 			return cmode_find_cmap(ardusub_cmode_map, cmode_str, custom_mode);
 	}
 	else if (MAV_AUTOPILOT::PX4 == ap) {
-			bool test = cmode_find_cmap(px4_cmode_map, cmode_str, custom_mode);
-	ROS_INFO("custom mode ; %i  %i", custom_mode, px4::custom_mode::MAIN_MODE_VOL_AUTO);
-		return test;
+		return cmode_find_cmap(px4_cmode_map, cmode_str, custom_mode);
 	}
 
 	ROS_ERROR_NAMED("uas", "MODE: Unsupported FCU");
