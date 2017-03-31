@@ -26,22 +26,22 @@ private:
 	ros::NodeHandle voliro_nh;
 	ros::Subscriber voliro_sub;
 
-	void voliro_ao_cb(const geometry_msgs::PoseStamped::ConstPtr &blah)
+	void voliro_ao_cb(const geometry_msgs::PoseStamped::ConstPtr &sp)
 	{
-		mavlink::common::msg::SET_ATTITUDE_POSITION_VOLIRO v{};
+		mavlink::common::msg::VOLIRO_FULL_SETPOINT v{};
 
-    v.time_boot_ms = blah->header.stamp.toNSec()/1000;
+    v.time_boot_ms = sp->header.stamp.toNSec()/1000;
     v.target_system = 1;
     v.target_component = 1;
 
-    v.q[0] = blah->pose.orientation.x;
-    v.q[1] = blah->pose.orientation.y;
-    v.q[2] = blah->pose.orientation.z;
-    v.q[3] = blah->pose.orientation.w;
+    v.q[0] = sp->pose.orientation.x;
+    v.q[1] = sp->pose.orientation.y;
+    v.q[2] = sp->pose.orientation.z;
+    v.q[3] = sp->pose.orientation.w;
 
-    v.x = blah->pose.position.x;
-    v.y = blah->pose.position.y;
-    v.z = blah->pose.position.z;
+    v.x = sp->pose.position.x;
+    v.y = sp->pose.position.y;
+    v.z = sp->pose.position.z;
 
 		UAS_FCU(m_uas)->send_message_ignore_drop(v);
 	}
