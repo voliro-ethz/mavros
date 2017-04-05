@@ -45,6 +45,11 @@ private:
 		v.target_system = 1;
 		v.target_component = 1;
 
+		// Equivalent to default 0 val :p
+		v.takeoff_enabled = 0;
+		v.landing_enabled = 0;
+		v.velocity_enabled = 0;
+
 		v.x = p.x();
 		v.y = p.y();
 		v.z = p.z();
@@ -55,6 +60,9 @@ private:
 		v.q[1] = q.x();
 		v.q[2] = q.y();
 		v.q[3] = q.z();
+
+
+		// Velocities Later!!
 
 
 		// v.q[0] = sp->pose.orientation.x;
