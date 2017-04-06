@@ -1,5 +1,6 @@
 #include <mavros/mavros_plugin.h>
 #include <geometry_msgs/PoseStamped.h>
+#include <geometry_msgs/TwistStamped.h>
 
 #include <eigen_conversions/eigen_msg.h>
 
@@ -16,7 +17,9 @@ public:
 	void initialize(UAS &uas_)
 	{
 		PluginBase::initialize(uas_);
-		voliro_sub = voliro_nh.subscribe("waypoint", 1, &VOLWaypointPlugin::voliro_ao_cb, this);
+		waypoint_sub = voliro_nh.subscribe("waypoint", 1, &VOLWaypointPlugin::waypoint_cb, this);
+		velocity_sub = voliro_nh.subscribe("velocity", 1, &VOLWaypointPlugin::velocity_cb, this);
+
 	}
 
 	Subscriptions get_subscriptions()
@@ -26,9 +29,10 @@ public:
 
 private:
 	ros::NodeHandle voliro_nh;
-	ros::Subscriber voliro_sub;
+	ros::Subscriber waypoint_sub;
+	ros::Subscriber velocity_sub;
 
-	void voliro_ao_cb(const geometry_msgs::PoseStamped::ConstPtr &sp)
+	void waypoint_cb(const geometry_msgs::PoseStamped::ConstPtr &sp)
 	{
 		mavlink::common::msg::VOLIRO_FULL_SETPOINT v{};
 
@@ -73,6 +77,38 @@ private:
     // v.x = sp->pose.position.x;
     // v.y = sp->pose.position.y;
     // v.z = sp->pose.position.z;
+
+		UAS_FCU(m_uas)->send_message_ignore_drop(v);
+	}
+
+	void velocity_cb(const geometry_msgs::TwistStamped::ConstPtr &sp)
+	{
+		mavlink::common::msg::VOLIRO_FULL_SETPOINT v{};
+
+		// Eigen::Affine3d tr;
+		// tf::twistMsgToEigen(sp->twist, tr);
+		//
+		// // Transform quaternion and position to NED Coordinate Frame
+		//
+		// auto p = ftf::transform_frame_enu_ned(Eigen::Vector3d(tr.translation()));
+		// auto q = ftf::transform_orientation_enu_ned(
+		// 			ftf::transform_orientation_baselink_aircraft(Eigen::Quaterniond(tr.rotation())));
+
+		v.time_boot_ms = sp->header.stamp.toNSec() / 1000000;
+		v.target_system = 1;
+		v.target_component = 1;
+
+		v.takeoff_enabled = 0;
+		v.landing_enabled = 0;
+		v.velocity_enabled = 1;
+
+		v.vx = sp->twist.linear.x;
+		v.vy = sp->twist.linear.y;
+		v.vz = sp->twist.linear.z;
+
+		v.roll_rate = sp->twist.angular.x;
+		v.pitch_rate = sp->twist.angular.y;
+		v.yaw_rate = sp->twist.angular.z;
 
 		UAS_FCU(m_uas)->send_message_ignore_drop(v);
 	}
