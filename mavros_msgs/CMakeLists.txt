@@ -39,6 +39,7 @@ add_message_files(
   hil_gps_msg.msg
   sensor_msg.msg
   hil_state_quat.msg
+  full_voliro.msg
 )
 
 add_service_files(

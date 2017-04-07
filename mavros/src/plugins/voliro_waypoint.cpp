@@ -1,5 +1,7 @@
 #include <mavros/mavros_plugin.h>
-#include <geometry_msgs/PoseStamped.h>
+// #include <geometry_msgs/PoseStamped.h>
+// #include <std_msgs/Bool.h>
+#include <mavros_msgs/full_voliro.h>
 
 #include <eigen_conversions/eigen_msg.h>
 
@@ -17,6 +19,10 @@ public:
 	{
 		PluginBase::initialize(uas_);
 		voliro_sub = voliro_nh.subscribe("waypoint", 1, &VOLWaypointPlugin::voliro_ao_cb, this);
+		// takeoff_sub = voliro_nh.subscribe("", 1, &VOLWaypointPlugin::voliro_takeoff_cb, this);
+		// landing_sub = voliro_nh.subscribe("landing", 1, &VOLWaypointPlugin::voliro_landing_cb, this);
+		// velocity_sub = voliro_nh.subscribe("velocity", 1, &VOLWaypointPlugin::voliro_velocity_cb, this);
+
 	}
 
 	Subscriptions get_subscriptions()
@@ -27,13 +33,16 @@ public:
 private:
 	ros::NodeHandle voliro_nh;
 	ros::Subscriber voliro_sub;
+	// ros::Subscriber takeoff_sub;
+	// ros::Subscriber landing_sub;
+	// ros::Subscriber velocity_sub;
 
-	void voliro_ao_cb(const geometry_msgs::PoseStamped::ConstPtr &sp)
+	void voliro_ao_cb(const mavros_msgs::full_voliro::ConstPtr &sp)
 	{
 		mavlink::common::msg::VOLIRO_FULL_SETPOINT v{};
 
 		Eigen::Affine3d tr;
-		tf::poseMsgToEigen(sp->pose, tr);
+		tf::poseMsgToEigen(sp->posestamped.pose, tr);
 
 		// Transform quaternion and position to NED Coordinate Frame
 
@@ -41,14 +50,14 @@ private:
 		auto q = ftf::transform_orientation_enu_ned(
 					ftf::transform_orientation_baselink_aircraft(Eigen::Quaterniond(tr.rotation())));
 
-		v.time_boot_ms = sp->header.stamp.toNSec() / 1000000;
+		v.time_boot_ms = sp->posestamped.header.stamp.toNSec() / 1000000;
 		v.target_system = 1;
 		v.target_component = 1;
 
-		// Equivalent to default 0 val :p
-		v.takeoff_enabled = 0;
-		v.landing_enabled = 0;
-		v.velocity_enabled = 0;
+		v.takeoff_enabled = sp->takeoff;
+		v.landing_enabled = sp->landing;
+		v.velocity_enabled = sp->velocity;
+
 
 		v.x = p.x();
 		v.y = p.y();
@@ -62,20 +71,22 @@ private:
 		v.q[3] = q.z();
 
 
-		// Velocities Later!!
-
-
-		// v.q[0] = sp->pose.orientation.x;
-		// v.q[1] = sp->pose.orientation.y;
-		// v.q[2] = sp->pose.orientation.z;
-		// v.q[3] = sp->pose.orientation.w;
-
-    // v.x = sp->pose.position.x;
-    // v.y = sp->pose.position.y;
-    // v.z = sp->pose.position.z;
+		// Velocities Later!! TODO
 
 		UAS_FCU(m_uas)->send_message_ignore_drop(v);
 	}
+
+	// void voliro_takeoff_cb(const std_msgs::Bool::ConstPtr &tk){
+	//
+	// }
+	//
+	// void voliro_landing_cb(const std_msgs::Bool::ConstPtr &land){
+	//
+	// }
+	//
+	// void voliro_velocity_cb(const std_msgs::Bool::ConstPtr &vel){
+	//
+	// }
 
 };
 }	// namespace std_plugins
