@@ -1,5 +1,7 @@
 #include <mavros/mavros_plugin.h>
-#include <geometry_msgs/PoseStamped.h>
+#include <mavros_msgs/full_voliro.h>
+
+#include <eigen_conversions/eigen_msg.h>
 
 namespace mavros {
 namespace std_plugins{
@@ -14,7 +16,7 @@ public:
 	void initialize(UAS &uas_)
 	{
 		PluginBase::initialize(uas_);
-		voliro_sub = voliro_nh.subscribe("waypoint", 1, &VOLWaypointPlugin::voliro_ao_cb, this);
+		voliro_sub = voliro_nh.subscribe("waypoint", 1, &VOLWaypointPlugin::voliro_full_cb, this);
 	}
 
 	Subscriptions get_subscriptions()
@@ -26,22 +28,38 @@ private:
 	ros::NodeHandle voliro_nh;
 	ros::Subscriber voliro_sub;
 
-	void voliro_ao_cb(const geometry_msgs::PoseStamped::ConstPtr &sp)
-	{
+	void voliro_full_cb(const mavros_msgs::full_voliro::ConstPtr &sp) {
+
 		mavlink::common::msg::VOLIRO_FULL_SETPOINT v{};
 
-    v.time_boot_ms = sp->header.stamp.toNSec()/1000;
-    v.target_system = 1;
-    v.target_component = 1;
+		Eigen::Affine3d tr;
+		tf::poseMsgToEigen(sp->posestamped.pose, tr);
 
-    v.q[0] = sp->pose.orientation.x;
-    v.q[1] = sp->pose.orientation.y;
-    v.q[2] = sp->pose.orientation.z;
-    v.q[3] = sp->pose.orientation.w;
+		// Transform quaternion and position to NED Coordinate Frame
 
-    v.x = sp->pose.position.x;
-    v.y = sp->pose.position.y;
-    v.z = sp->pose.position.z;
+		auto p = ftf::transform_frame_enu_ned(Eigen::Vector3d(tr.translation()));
+		auto q = ftf::transform_orientation_enu_ned(
+					ftf::transform_orientation_baselink_aircraft(Eigen::Quaterniond(tr.rotation())));
+
+		v.time_boot_ms = sp->posestamped.header.stamp.toNSec() / 1000000;
+		v.target_system = 1;
+		v.target_component = 1;
+
+		v.takeoff_enabled = sp->takeoff;
+		v.landing_enabled = sp->landing;
+		v.velocity_enabled = sp->velocity;
+
+
+		v.x = p.x();
+		v.y = p.y();
+		v.z = p.z();
+
+		v.q[0] = q.w();
+		v.q[1] = q.x();
+		v.q[2] = q.y();
+		v.q[3] = q.z();
+
+		// Velocities Later!! TODO
 
 		UAS_FCU(m_uas)->send_message_ignore_drop(v);
 	}
