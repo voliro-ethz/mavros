@@ -1,12 +1,7 @@
 #include <mavros/mavros_plugin.h>
-<<<<<<< HEAD
 // #include <geometry_msgs/PoseStamped.h>
 // #include <std_msgs/Bool.h>
 #include <mavros_msgs/full_voliro.h>
-=======
-#include <geometry_msgs/PoseStamped.h>
-#include <geometry_msgs/TwistStamped.h>
->>>>>>> d8d01716cc165c66a4b10b8fad7d30be3bcef1ff
 
 #include <eigen_conversions/eigen_msg.h>
 
