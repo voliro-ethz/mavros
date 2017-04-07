@@ -23,15 +23,11 @@ public:
 	void initialize(UAS &uas_)
 	{
 		PluginBase::initialize(uas_);
-<<<<<<< HEAD
 		voliro_sub = voliro_nh.subscribe("waypoint", 1, &VOLWaypointPlugin::voliro_ao_cb, this);
 		// takeoff_sub = voliro_nh.subscribe("", 1, &VOLWaypointPlugin::voliro_takeoff_cb, this);
 		// landing_sub = voliro_nh.subscribe("landing", 1, &VOLWaypointPlugin::voliro_landing_cb, this);
 		// velocity_sub = voliro_nh.subscribe("velocity", 1, &VOLWaypointPlugin::voliro_velocity_cb, this);
-=======
-		waypoint_sub = voliro_nh.subscribe("waypoint", 1, &VOLWaypointPlugin::waypoint_cb, this);
-		velocity_sub = voliro_nh.subscribe("velocity", 1, &VOLWaypointPlugin::velocity_cb, this);
->>>>>>> d8d01716cc165c66a4b10b8fad7d30be3bcef1ff
+
 
 	}
 
@@ -48,7 +44,7 @@ private:
 	// ros::Subscriber velocity_sub;
 
 	void voliro_ao_cb(const mavros_msgs::full_voliro::ConstPtr &sp) {
-		
+
 		mavlink::common::msg::VOLIRO_FULL_SETPOINT v{};
 
 		Eigen::Affine3d tr;
