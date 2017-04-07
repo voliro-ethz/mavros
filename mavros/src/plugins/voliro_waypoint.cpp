@@ -1,7 +1,12 @@
 #include <mavros/mavros_plugin.h>
+<<<<<<< HEAD
 // #include <geometry_msgs/PoseStamped.h>
 // #include <std_msgs/Bool.h>
 #include <mavros_msgs/full_voliro.h>
+=======
+#include <geometry_msgs/PoseStamped.h>
+#include <geometry_msgs/TwistStamped.h>
+>>>>>>> d8d01716cc165c66a4b10b8fad7d30be3bcef1ff
 
 #include <eigen_conversions/eigen_msg.h>
 
@@ -18,10 +23,15 @@ public:
 	void initialize(UAS &uas_)
 	{
 		PluginBase::initialize(uas_);
+<<<<<<< HEAD
 		voliro_sub = voliro_nh.subscribe("waypoint", 1, &VOLWaypointPlugin::voliro_ao_cb, this);
 		// takeoff_sub = voliro_nh.subscribe("", 1, &VOLWaypointPlugin::voliro_takeoff_cb, this);
 		// landing_sub = voliro_nh.subscribe("landing", 1, &VOLWaypointPlugin::voliro_landing_cb, this);
 		// velocity_sub = voliro_nh.subscribe("velocity", 1, &VOLWaypointPlugin::voliro_velocity_cb, this);
+=======
+		waypoint_sub = voliro_nh.subscribe("waypoint", 1, &VOLWaypointPlugin::waypoint_cb, this);
+		velocity_sub = voliro_nh.subscribe("velocity", 1, &VOLWaypointPlugin::velocity_cb, this);
+>>>>>>> d8d01716cc165c66a4b10b8fad7d30be3bcef1ff
 
 	}
 
@@ -37,8 +47,8 @@ private:
 	// ros::Subscriber landing_sub;
 	// ros::Subscriber velocity_sub;
 
-	void voliro_ao_cb(const mavros_msgs::full_voliro::ConstPtr &sp)
-	{
+	void voliro_ao_cb(const mavros_msgs::full_voliro::ConstPtr &sp) {
+		
 		mavlink::common::msg::VOLIRO_FULL_SETPOINT v{};
 
 		Eigen::Affine3d tr;
@@ -75,18 +85,6 @@ private:
 
 		UAS_FCU(m_uas)->send_message_ignore_drop(v);
 	}
-
-	// void voliro_takeoff_cb(const std_msgs::Bool::ConstPtr &tk){
-	//
-	// }
-	//
-	// void voliro_landing_cb(const std_msgs::Bool::ConstPtr &land){
-	//
-	// }
-	//
-	// void voliro_velocity_cb(const std_msgs::Bool::ConstPtr &vel){
-	//
-	// }
 
 };
 }	// namespace std_plugins
