@@ -1,6 +1,4 @@
 #include <mavros/mavros_plugin.h>
-// #include <geometry_msgs/PoseStamped.h>
-// #include <std_msgs/Bool.h>
 #include <mavros_msgs/full_voliro.h>
 
 #include <eigen_conversions/eigen_msg.h>
@@ -18,12 +16,7 @@ public:
 	void initialize(UAS &uas_)
 	{
 		PluginBase::initialize(uas_);
-		voliro_sub = voliro_nh.subscribe("waypoint", 1, &VOLWaypointPlugin::voliro_ao_cb, this);
-		// takeoff_sub = voliro_nh.subscribe("", 1, &VOLWaypointPlugin::voliro_takeoff_cb, this);
-		// landing_sub = voliro_nh.subscribe("landing", 1, &VOLWaypointPlugin::voliro_landing_cb, this);
-		// velocity_sub = voliro_nh.subscribe("velocity", 1, &VOLWaypointPlugin::voliro_velocity_cb, this);
-
-
+		voliro_sub = voliro_nh.subscribe("waypoint", 1, &VOLWaypointPlugin::voliro_full_cb, this);
 	}
 
 	Subscriptions get_subscriptions()
@@ -34,11 +27,8 @@ public:
 private:
 	ros::NodeHandle voliro_nh;
 	ros::Subscriber voliro_sub;
-	// ros::Subscriber takeoff_sub;
-	// ros::Subscriber landing_sub;
-	// ros::Subscriber velocity_sub;
 
-	void voliro_ao_cb(const mavros_msgs::full_voliro::ConstPtr &sp) {
+	void voliro_full_cb(const mavros_msgs::full_voliro::ConstPtr &sp) {
 
 		mavlink::common::msg::VOLIRO_FULL_SETPOINT v{};
 
@@ -64,13 +54,10 @@ private:
 		v.y = p.y();
 		v.z = p.z();
 
-		// Is this the correct order of quaternions?
-
 		v.q[0] = q.w();
 		v.q[1] = q.x();
 		v.q[2] = q.y();
 		v.q[3] = q.z();
-
 
 		// Velocities Later!! TODO
 
