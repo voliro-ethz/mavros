@@ -2,7 +2,7 @@
 	<!-- vim: set ft=xml noet : -->
 	<!-- example launch script for PX4 based FCU's -->
 
-	<arg name="fcu_url" default="/dev/ttyUSB0:921600" />
+	<arg name="fcu_url" default="/dev/ttyS1:921600" />
 	<arg name="gcs_url" default="" />
 	<arg name="tgt_system" default="1" />
 	<arg name="tgt_component" default="1" />
@@ -18,4 +18,8 @@
 		<arg name="tgt_component" value="$(arg tgt_component)" />
 		<arg name="log_output" value="$(arg log_output)" />
 	</include>
+	<include file="$(find vicon_bridge)/launch/vicon.launch"/>
+	<node name="tf_distort" pkg="vicon_bridge" type="tf_distort"/>
+	<node name="tf_drop" pkg="topic_tools" type="drop" args="/vicon/voliro/voliro 9 10"/>
+	<node name="topic_remap" pkg="topic_tools" type="relay" args="/vicon/voliro/voliro_drop /mavros/mocap/tf"/>
 </launch>
