@@ -142,6 +142,24 @@ private:
     volo_alpha_msg.port_D_8[i] = vola.port_D_8[i];
     volo_alpha_msg.port_D_9[i] = vola.port_D_9[i];*/
 }
+volo_alpha_msg.port_A_1[3] = 0;//Last component doesn'exist in the mavlink message
+volo_alpha_msg.port_A_2[3] = 0;
+volo_alpha_msg.port_A_3[3] = 0;
+volo_alpha_msg.port_A_4[3] = 0;
+volo_alpha_msg.port_A_5[3] = 0;
+volo_alpha_msg.port_A_6[3] = 0;
+volo_alpha_msg.port_A_7[3] = 0;
+volo_alpha_msg.port_A_8[3] = 0;
+volo_alpha_msg.port_A_9[3] = 0;
+volo_alpha_msg.port_B_1[3] = 0;
+volo_alpha_msg.port_B_2[3] = 0;
+volo_alpha_msg.port_B_3[3] = 0;
+volo_alpha_msg.port_B_4[3] = 0;
+volo_alpha_msg.port_B_5[3] = 0;
+volo_alpha_msg.port_B_6[3] = 0;
+volo_alpha_msg.port_B_7[3] = 0;
+volo_alpha_msg.port_B_8[3] = 0;
+volo_alpha_msg.port_B_9[3] = 0;
 
     voliro_alpha_pub.publish(volo_alpha_msg);
   }
