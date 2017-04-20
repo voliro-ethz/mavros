@@ -42,6 +42,7 @@ private:
 				va.alpha[i] = volo->alpha[i];
 		}
 
+
 		UAS_FCU(m_uas)->send_message_ignore_drop(v);
 		UAS_FCU(m_uas)->send_message_ignore_drop(va);
 	}
