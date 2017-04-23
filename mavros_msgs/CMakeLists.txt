@@ -41,6 +41,7 @@ add_message_files(
   hil_state_quat.msg
   full_voliro.msg
   vologging.msg
+  voliro_ballbot.msg
 )
 
 add_service_files(
