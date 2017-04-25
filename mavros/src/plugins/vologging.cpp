@@ -60,9 +60,9 @@ void handle_vologging(const mavlink::mavlink_message_t   *msg,
     Vologging.port_A_4[i] = logging.port_A_4[i];
     Vologging.port_A_5[i] = logging.port_A_5[i];
     Vologging.port_A_6[i] = logging.port_A_6[i];
-    // Vologging.port_A_7[i] = logging.port_A_7[i];
-    // Vologging.port_A_8[i] = logging.port_A_8[i];
-    // Vologging.port_A_9[i] = logging.port_A_9[i];
+    Vologging.port_A_7[i] = logging.port_A_7[i];
+    Vologging.port_A_8[i] = logging.port_A_8[i];
+    Vologging.port_A_9[i] = logging.port_A_9[i];
     // Vologging.port_B_1[i] = logging.port_B_1[i];
     // Vologging.port_B_2[i] = logging.port_B_2[i];
     // Vologging.port_B_3[i] = logging.port_B_3[i];
