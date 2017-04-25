@@ -24,7 +24,7 @@ public:
     voliro_alpha_pub = volo_nh.advertise<mavros_msgs::voliro_alpha>(
       "voliro_alpha",
       10);
-    volo_nh.param<std::string>("frame_id", frame_id, "base_link");
+    // volo_nh.param<std::string>("frame_id", frame_id, "base_link");
 
     // reset has_* flags on connection change
     enable_connection_cb();
@@ -45,7 +45,7 @@ private:
 
   bool has_voliro;
   bool has_voliro_alpha;
-  std::string frame_id;
+  // std::string frame_id;
 
   void handle_voliro(const mavlink::mavlink_message_t *msg,
                      mavlink::common::msg::VOLIRO_AO & volao)
@@ -102,64 +102,7 @@ private:
     volo_alpha_msg.alpha[5] = vola.alpha[5];
 
     // ports for debbuging
-    volo_alpha_msg.header      = m_uas->synchronized_header(frame_id,
-                                                            vola.time_boot_ms);
-		for(int i=0;i<3;++i){
-    volo_alpha_msg.port_A_1[i] = vola.port_A_1[i];
-    volo_alpha_msg.port_A_2[i] = vola.port_A_2[i];
-    volo_alpha_msg.port_A_3[i] = vola.port_A_3[i];
-    volo_alpha_msg.port_A_4[i] = vola.port_A_4[i];
-    volo_alpha_msg.port_A_5[i] = vola.port_A_5[i];
-    volo_alpha_msg.port_A_6[i] = vola.port_A_6[i];
-    volo_alpha_msg.port_A_7[i] = vola.port_A_7[i];
-    volo_alpha_msg.port_A_8[i] = vola.port_A_8[i];
-    volo_alpha_msg.port_A_9[i] = vola.port_A_9[i];
-    volo_alpha_msg.port_B_1[i] = vola.port_B_1[i];
-    volo_alpha_msg.port_B_2[i] = vola.port_B_2[i];
-    volo_alpha_msg.port_B_3[i] = vola.port_B_3[i];
-    volo_alpha_msg.port_B_4[i] = vola.port_B_4[i];
-    volo_alpha_msg.port_B_5[i] = vola.port_B_5[i];
-    volo_alpha_msg.port_B_6[i] = vola.port_B_6[i];
-    volo_alpha_msg.port_B_7[i] = vola.port_B_7[i];
-    volo_alpha_msg.port_B_8[i] = vola.port_B_8[i];
-    volo_alpha_msg.port_B_9[i] = vola.port_B_9[i];
-    /*volo_alpha_msg.port_C_1[i] = vola.port_C_1[i];
-    volo_alpha_msg.port_C_2[i] = vola.port_C_2[i];
-    volo_alpha_msg.port_C_3[i] = vola.port_C_3[i];
-    volo_alpha_msg.port_C_4[i] = vola.port_C_4[i];
-    volo_alpha_msg.port_C_5[i] = vola.port_C_5[i];
-    volo_alpha_msg.port_C_6[i] = vola.port_C_6[i];
-    volo_alpha_msg.port_C_7[i] = vola.port_C_7[i];
-    volo_alpha_msg.port_C_8[i] = vola.port_C_8[i];
-    volo_alpha_msg.port_C_9[i] = vola.port_C_9[i];
-    volo_alpha_msg.port_D_1[i] = vola.port_D_1[i];
-    volo_alpha_msg.port_D_2[i] = vola.port_D_2[i];
-    volo_alpha_msg.port_D_3[i] = vola.port_D_3[i];
-    volo_alpha_msg.port_D_4[i] = vola.port_D_4[i];
-    volo_alpha_msg.port_D_5[i] = vola.port_D_5[i];
-    volo_alpha_msg.port_D_6[i] = vola.port_D_6[i];
-    volo_alpha_msg.port_D_7[i] = vola.port_D_7[i];
-    volo_alpha_msg.port_D_8[i] = vola.port_D_8[i];
-    volo_alpha_msg.port_D_9[i] = vola.port_D_9[i];*/
-}
-volo_alpha_msg.port_A_1[3] = 0;//Last component doesn'exist in the mavlink message
-volo_alpha_msg.port_A_2[3] = 0;
-volo_alpha_msg.port_A_3[3] = 0;
-volo_alpha_msg.port_A_4[3] = 0;
-volo_alpha_msg.port_A_5[3] = 0;
-volo_alpha_msg.port_A_6[3] = 0;
-volo_alpha_msg.port_A_7[3] = 0;
-volo_alpha_msg.port_A_8[3] = 0;
-volo_alpha_msg.port_A_9[3] = 0;
-volo_alpha_msg.port_B_1[3] = 0;
-volo_alpha_msg.port_B_2[3] = 0;
-volo_alpha_msg.port_B_3[3] = 0;
-volo_alpha_msg.port_B_4[3] = 0;
-volo_alpha_msg.port_B_5[3] = 0;
-volo_alpha_msg.port_B_6[3] = 0;
-volo_alpha_msg.port_B_7[3] = 0;
-volo_alpha_msg.port_B_8[3] = 0;
-volo_alpha_msg.port_B_9[3] = 0;
+    // volo_alpha_msg.header      = m_uas->synchronized_header(frame_id, vola.time_boot_ms);
 
     voliro_alpha_pub.publish(volo_alpha_msg);
   }
