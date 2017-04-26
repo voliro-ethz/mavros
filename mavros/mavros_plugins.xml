@@ -86,4 +86,7 @@
 	<class name="vologging" type="mavros::std_plugins::VOLOGGINGPlugin" base_class_type="mavros::plugin::PluginBase">
 		<description>Logging for Voliro</description>
 	</class>
+	<class name="voliro_inverse" type="mavros::std_plugins::VOLIROInversePlugin" base_class_type="mavros::plugin::PluginBase">
+		<description>Logging for Voliro</description>
+	</class>
 </library>
