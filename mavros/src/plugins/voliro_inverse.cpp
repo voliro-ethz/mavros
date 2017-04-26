@@ -18,7 +18,8 @@ class VOLIROInversePlugin : public plugin::PluginBase
 {
 public:
 	VOLIROInversePlugin() : PluginBase(),
-													voliro_nh("~voliro")
+													voliro_nh("~voliro"),
+													has_voliro_inverse(false)
 
 	{
 		A.resize(6,6);
@@ -50,6 +51,7 @@ public:
 private:
 	ros::NodeHandle voliro_nh;
 	ros::Publisher voliro_pub;
+	bool has_voliro_inverse;
 
 	Matrix A;
 	Vector alpha;
@@ -75,6 +77,11 @@ private:
                      mavlink::common::msg::VOLIRO_INVERSE & vol_a_F_M)
   {
 
+		ROS_INFO_COND_NAMED(!has_voliro_inverse,
+                        "voliro",
+                        "VOLIRO: INVERSE INCOMING!");
+    has_voliro_inverse = true;
+
 		for (int i = 0; i < 6; ++i){
 			alpha(i) = vol_a_F_M.alpha[i];
 			F_M_des(i) = vol_a_F_M.F_M_des[i];
@@ -93,7 +100,10 @@ private:
     voliro_pub.publish(volomsg);
   }
 
-
+	void connection_cb(bool connected) override
+  {
+    has_voliro_inverse = false;
+  }
 
 };
 }	// namespace extra_plugins
