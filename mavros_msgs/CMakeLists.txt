@@ -34,8 +34,8 @@ add_message_files(
   Vibration.msg
   Waypoint.msg
   WaypointList.msg
-  voliro_ao.msg
   voliro_alpha.msg
+  voliro_omega.msg
   hil_gps_msg.msg
   sensor_msg.msg
   hil_state_quat.msg
