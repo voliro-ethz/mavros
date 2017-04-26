@@ -35,11 +35,21 @@ private:
 		Eigen::Affine3d tr;
 		tf::poseMsgToEigen(sp->posestamped.pose, tr);
 
+		Eigen::Matrix<double,6,1> tw;
+		tf::twistMsgToEigen(sp->twiststamped.twist, tw);
+
+Eigen::Vector3d twa(tw(0),tw(1),tw(2));
+Eigen::Vector3d twb(tw(3),tw(4),tw(5));
+
 		// Transform quaternion and position to NED Coordinate Frame
 
 		auto p = ftf::transform_frame_enu_ned(Eigen::Vector3d(tr.translation()));
 		auto q = ftf::transform_orientation_enu_ned(
 					ftf::transform_orientation_baselink_aircraft(Eigen::Quaterniond(tr.rotation())));
+
+	auto r = ftf::transform_frame_enu_ned(twa);
+	auto s = ftf::transform_frame_enu_ned(twa);
+
 
 		v.time_boot_ms = sp->posestamped.header.stamp.toNSec() / 1000000;
 		v.target_system = 1;
@@ -60,7 +70,15 @@ private:
 		v.q[2] = q.y();
 		v.q[3] = q.z();
 
-		// Velocities Later!! TODO
+
+		v.vx= r.x();
+		v.vy= r.y();
+		v.vz= r.z();
+
+		v.roll_rate= s.x();
+		v.pitch_rate= s.y();
+		v.yaw_rate= s.z();
+
 
 		UAS_FCU(m_uas)->send_message_ignore_drop(v);
 	}
