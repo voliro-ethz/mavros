@@ -48,7 +48,7 @@ Eigen::Vector3d twb(tw(3),tw(4),tw(5));
 					ftf::transform_orientation_baselink_aircraft(Eigen::Quaterniond(tr.rotation())));
 
 	auto r = ftf::transform_frame_enu_ned(twa);
-	auto s = ftf::transform_frame_enu_ned(twa);
+	auto s = ftf::transform_frame_enu_ned(twb);
 
 
 		v.time_boot_ms = sp->posestamped.header.stamp.toNSec() / 1000000;
