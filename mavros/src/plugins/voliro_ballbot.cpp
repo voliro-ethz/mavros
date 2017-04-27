@@ -65,7 +65,7 @@ void handle_ballbot(const mavlink::mavlink_message_t   *msg,
     BallbotFullstate.phiY=msg_ballbot_fullstate.phiY;
     BallbotFullstate.phiYdot=msg_ballbot_fullstate.phiYdot;
 
-    BallbotFullstate.start=msg_ballbot_fullstate.start_enalbed;
+    BallbotFullstate.start=msg_ballbot_fullstate.start_enabled;
     BallbotFullstate.stop=msg_ballbot_fullstate.stop_enabled;
     BallbotFullstate.flag1=msg_ballbot_fullstate.flag1;
     BallbotFullstate.flag2=msg_ballbot_fullstate.flag2;
