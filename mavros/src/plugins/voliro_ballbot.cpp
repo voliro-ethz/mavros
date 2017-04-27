@@ -25,11 +25,11 @@ public:
       "voliro_ballbot_fullstate",
       10);
     volo_nh.param<std::string>("frame_id", frame_id, "base_link");
-    voliro_sub = voliro_nh.subscribe("voliro_ballbot_desired_fullstate",
+    voliro_sub_full = volo_nh.subscribe("voliro_ballbot_desired_fullstate",
                                      1,
                                      &BALLBOTPlugin::voliro_fullstate_cb,
                                      this);
-    voliro_sub = voliro_nh.subscribe("voliro_ballbot_desired_shortstate",
+    voliro_sub_short = volo_nh.subscribe("voliro_ballbot_desired_shortstate",
                                      1,
                                      &BALLBOTPlugin::voliro_shortstate_cb,
                                      this);
@@ -43,13 +43,16 @@ public:
   Subscriptions get_subscriptions() {
     return {
              make_handler(&BALLBOTPlugin::handle_ballbot),
-    }
+    };
   }
 
 private:
 
   ros::NodeHandle volo_nh;
   ros::Publisher  ballbot_fullstate_pub;
+  ros::Subscriber voliro_sub_full;
+  ros::Subscriber voliro_sub_short;
+
 
   bool has_voliro_ballbot;
   std::string frame_id;
@@ -97,7 +100,7 @@ private:
 
   // Send desired state to px4
   // Just send one topic a messsage other ways an error could occur
-  void voliro_fullstate_cb(const mavros_msgs::volirio_ballbot fullstate_in) {
+  void voliro_fullstate_cb(const mavros_msgs::voliro_ballbot fullstate_in) {
     mavlink::common::msg::VOLIRO_BALLBOT_FULLSTATE fullstate_out;
     //Sending also derivatives as desired state, for better tracking behaviour
     fullstate_out.thetaX    = fullstate_in.thetaX;
@@ -124,19 +127,19 @@ private:
     UAS_FCU(m_uas)->send_message_ignore_drop(fullstate_out);
   }
 
-  void voliro_shortstate_cb(const mavros_msgs::volirio_ballbot fullstate_in) {
+  void voliro_shortstate_cb(const mavros_msgs::voliro_ballbot fullstate_in) {
     mavlink::common::msg::VOLIRO_BALLBOT_FULLSTATE fullstate_out;
     //Just sending generalized coordinates to the px4, other values are zero
     fullstate_out.thetaX    = fullstate_in.thetaX;
-    fullstate_out.thetaXdot = fullstate_in.thetaXdot;
+    fullstate_out.thetaXdot = 0.0f;
     fullstate_out.thetaY    = fullstate_in.thetaY;
-    fullstate_out.thetaYdot = fullstate_in.thetaYdot;
+    fullstate_out.thetaYdot = 0.0f;
     fullstate_out.thetaZ    = fullstate_in.thetaZ;
-    fullstate_out.thetaZdot = fullstate_in.thetaZdot;
+    fullstate_out.thetaZdot = 0.0f;
     fullstate_out.phiX      = fullstate_in.phiX;
-    fullstate_out.phiXdot   = fullstate_in.phiXdot;
+    fullstate_out.phiXdot   = 0.0f;
     fullstate_out.phiY      = fullstate_in.phiY;
-    fullstate_out.phiYdot   = fullstate_in.phiYdot;
+    fullstate_out.phiYdot   = 0.0f;
 
     fullstate_out.start_enabled = fullstate_in.start;
     fullstate_out.stop_enabled  = fullstate_in.stop;
