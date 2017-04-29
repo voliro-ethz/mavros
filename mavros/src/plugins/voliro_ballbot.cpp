@@ -119,6 +119,10 @@ private:
     fullstate_out.flag1         = fullstate_in.flag1;
     fullstate_out.flag2         = fullstate_in.flag2;
 
+    fullstate_out.time_boot_ms = fullstate_in.header.stamp.toNSec() / 1000000;
+		fullstate_out.target_system = 1;
+		fullstate_out.target_component = 1;
+
     //Check for double Sending
     _sending_fullstate=true;
     if(_sending_fullstate && _sending_shortstate){
@@ -128,30 +132,29 @@ private:
   }
 
   void voliro_shortstate_cb(const mavros_msgs::voliro_ballbot fullstate_in) {
-    mavlink::common::msg::VOLIRO_BALLBOT_FULLSTATE fullstate_out;
+    mavlink::common::msg::VOLIRO_BALLBOT_SHORTSTATE shortstate_out;
     //Just sending generalized coordinates to the px4, other values are zero
-    fullstate_out.thetaX    = fullstate_in.thetaX;
-    fullstate_out.thetaXdot = 0.0f;
-    fullstate_out.thetaY    = fullstate_in.thetaY;
-    fullstate_out.thetaYdot = 0.0f;
-    fullstate_out.thetaZ    = fullstate_in.thetaZ;
-    fullstate_out.thetaZdot = 0.0f;
-    fullstate_out.phiX      = fullstate_in.phiX;
-    fullstate_out.phiXdot   = 0.0f;
-    fullstate_out.phiY      = fullstate_in.phiY;
-    fullstate_out.phiYdot   = 0.0f;
+    shortstate_out.thetaX    = fullstate_in.thetaX;
+    shortstate_out.thetaY    = fullstate_in.thetaY;
+    shortstate_out.thetaZ    = fullstate_in.thetaZ;
+    shortstate_out.phiX      = fullstate_in.phiX;
+    shortstate_out.phiY      = fullstate_in.phiY;
 
-    fullstate_out.start_enabled = fullstate_in.start;
-    fullstate_out.stop_enabled  = fullstate_in.stop;
-    fullstate_out.flag1         = fullstate_in.flag1;
-    fullstate_out.flag2         = fullstate_in.flag2;
+    shortstate_out.start_enabled = fullstate_in.start;
+    shortstate_out.stop_enabled  = fullstate_in.stop;
+    shortstate_out.flag1         = fullstate_in.flag1;
+    shortstate_out.flag2         = fullstate_in.flag2;
+
+    shortstate_out.time_boot_ms = fullstate_in.header.stamp.toNSec() / 1000000;
+		shortstate_out.target_system = 1;
+		shortstate_out.target_component = 1;
 
     //Check for double Sending
     _sending_shortstate=true;
     if(_sending_fullstate && _sending_shortstate){
       ROS_WARN_STREAM("Both full and short reference is sent to px4. This could lead to unwanted behaviour");
     }
-    UAS_FCU(m_uas)->send_message_ignore_drop(fullstate_out);
+    UAS_FCU(m_uas)->send_message_ignore_drop(shortstate_out);
   }
   void connection_cb(bool connected) override
   {
