@@ -129,6 +129,7 @@ add_library(mavros_plugins
   src/plugins/voliro_send.cpp
   src/plugins/voliro_waypoint.cpp
   src/plugins/vologging.cpp
+  src/plugins/voliro_pid_tuning.cpp
 )
 add_dependencies(mavros_plugins
   mavros
