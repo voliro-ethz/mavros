@@ -83,7 +83,10 @@
 	<class name="vologging" type="mavros::std_plugins::VOLOGGINGPlugin" base_class_type="mavros::plugin::PluginBase">
 		<description>Logging for Voliro</description>
 	</class>
+	<class name="voliro_pid_tuning" type="mavros::std_plugins::VOLIROtunePIDPlugin" base_class_type="mavros::plugin::PluginBase">
+		<description>Dynamic parameters for PID tuning</description>
+  </class>
 	<class name="voliro_inverse" type="mavros::std_plugins::VOLIROInversePlugin" base_class_type="mavros::plugin::PluginBase">
-		<description>Logging for Voliro</description>
+		<description>Inverse for Voliro</description>
 	</class>
 </library>
