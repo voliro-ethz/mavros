@@ -74,9 +74,6 @@
 	<class name="voliro_receive" type="mavros::std_plugins::VOLIROPubPlugin" base_class_type="mavros::plugin::PluginBase">
 		<description>Receives alphas and omegas from Pixhawk</description>
 	</class>
-	<!-- <class name="voliro_send" type="mavros::std_plugins::VOLIROSendPlugin" base_class_type="mavros::plugin::PluginBase">
-		<description>Sends alphas and omegas to Pixhawk</description>
-	</class> -->
 	<class name="hil_voliro" type="mavros::std_plugins::HILVoliroPlugin" base_class_type="mavros::plugin::PluginBase">
 		<description>Sends ROS messages from Gazebo to Pixhawk</description>
 	</class>
