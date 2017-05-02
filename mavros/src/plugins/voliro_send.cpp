@@ -1,5 +1,4 @@
 #include <mavros/mavros_plugin.h>
-#include <mavros_msgs/voliro_ao.h>
 #include <mavros_msgs/voliro_alpha.h>
 
 
@@ -30,20 +29,13 @@ private:
 
 	void voliro_ao_cb(const mavros_msgs::voliro_ao::ConstPtr &volo)
 	{
-		mavlink::common::msg::VOLIRO_AO v;
 		mavlink::common::msg::VOLIRO_ALPHA va;
 
 		//ROS_INFO("VOLIRO WAS HERE");
 
 		for (int i = 0; i < 6; ++i){
-				v.alpha[i] = volo->alpha[i];
-				v.omega[i] = volo->omega[i];
-
 				va.alpha[i] = volo->alpha[i];
 		}
-
-
-		UAS_FCU(m_uas)->send_message_ignore_drop(v);
 		UAS_FCU(m_uas)->send_message_ignore_drop(va);
 	}
 
