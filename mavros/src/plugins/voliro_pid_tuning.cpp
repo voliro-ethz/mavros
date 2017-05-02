@@ -29,7 +29,7 @@ private:
 
 	void voliro_pid_cb(const mavros_msgs::voliro_pid_tuning::ConstPtr &msg_in)
 	{
-		mavlink::common::msg::PID_TUNING msg_out;
+		mavlink::common::msg::VOLIRO_PID_TUNING msg_out;
 
 		msg_out.valid    = msg_in->valid;
 	  msg_out.xy_pos_p = msg_in->XY_POS_P;
