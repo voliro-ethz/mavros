@@ -1,5 +1,4 @@
 #include <mavros/mavros_plugin.h>
-#include <mavros_msgs/voliro_ao.h>
 #include <mavros_msgs/voliro_alpha.h>
 
 namespace mavros {
