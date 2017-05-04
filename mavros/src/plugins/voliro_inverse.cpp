@@ -92,12 +92,15 @@ private:
     omega = A.colPivHouseholderQr().solve(F_M_des);
 
     mavros_msgs::voliro_omega volomsg;
+		mavlink::common::msg::VOLIRO_OMEGA msg_out;
 
 		for (int i = 0; i < 6; ++i){
 			volomsg.omega[i] = omega(i);
+			msg_out.omega[i] = omega(i);
 		}
 
     voliro_pub.publish(volomsg);
+		UAS_FCU(m_uas)->send_message_ignore_drop(msg_out);
   }
 
 	void connection_cb(bool connected) override
