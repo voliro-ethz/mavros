@@ -58,7 +58,7 @@ Eigen::Vector3d twb(tw(3),tw(4),tw(5));
 		v.takeoff_enabled = sp->takeoff;
 		v.landing_enabled = sp->landing;
 		v.rotorguards_tola_enabled  = sp->rotorguards_tola;
-		v.velocity_enabled = sp->velocity;
+
 
 
 		v.x = p.x();
