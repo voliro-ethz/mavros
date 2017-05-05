@@ -125,10 +125,11 @@ add_library(mavros_plugins
   src/plugins/hil_controls.cpp
   src/plugins/hil_actuator_controls.cpp
   src/plugins/voliro.cpp
+  src/plugins/voliro_inverse.cpp
   src/plugins/hil_voliro.cpp
-  src/plugins/voliro_send.cpp
   src/plugins/voliro_waypoint.cpp
   src/plugins/vologging.cpp
+  src/plugins/voliro_pid_tuning.cpp
 )
 add_dependencies(mavros_plugins
   mavros
