@@ -3,3 +3,4 @@ bool takeoff
 bool landing
 bool rotorguards_tola
 bool velocity
+bool fan_enabled

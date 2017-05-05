@@ -49,6 +49,7 @@ private:
 		v.landing_enabled = sp->landing;
 		v.rotorguards_tola_enabled  = sp->rotorguards_tola;
 		v.velocity_enabled = sp->velocity;
+		v.fan_enabled = sp->fan_enabled;
 
 
 		v.x = p.x();
