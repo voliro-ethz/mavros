@@ -3,4 +3,4 @@ geometry_msgs/TwistStamped twiststamped
 bool takeoff
 bool landing
 bool rotorguards_tola
-
+bool headless
