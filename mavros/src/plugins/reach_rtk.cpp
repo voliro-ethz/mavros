@@ -1,4 +1,5 @@
 #include <mavros/mavros_plugin.h>
+#include <mavros_msgs/full_gps.h>
 
 #include <sensor_msgs/NavSatFix.h>
 #include <sensor_msgs/NavSatStatus.h>
@@ -33,7 +34,7 @@ private:
 
 	void voliro_full_gps_cb(const mavros_msgs::full_gps::ConstPtr &raw_gps) {
 
-		mavlink::common::msg VOLIRO_GPS gps_out;
+		mavlink::common::msg::VOLIRO_GPS gps_out;
 		gps_out.time_usec = raw_gps->fix.header.stamp.toNSec() / 1000;
 		gps_out.fix_type = raw_gps->fix.status.status + 1;
 		gps_out.lat = raw_gps->fix.latitude * 10000000; // [degrees * 1E7]
@@ -41,8 +42,8 @@ private:
 		gps_out.alt = raw_gps->fix.altitude * 1000; // [m * 1000] AMSL
 
 		// ??? TODO
-		gps_out.eph = 1.0f;
-		gps_out.epv = 1.0f;
+		gps_out.eph = 2;
+		gps_out.epv = 2;
 
 		// Velocities ! -> Transform
 
@@ -66,7 +67,7 @@ private:
 		// Hardcode
 		gps_out.satellites_visible = 5;
 
-		UAS_FCU(m_uas)->send_message_ignore_drop(v);
+		UAS_FCU(m_uas)->send_message_ignore_drop(gps_out);
 	}
 
 };
