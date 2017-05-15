@@ -89,4 +89,7 @@
 	<class name="voliro_inverse" type="mavros::std_plugins::VOLIROInversePlugin" base_class_type="mavros::plugin::PluginBase">
 		<description>Inverse for Voliro</description>
 	</class>
+	<class name="voliro_reach" type="mavros::std_plugins::VOLReachPlugin" base_class_type="mavros::plugin::PluginBase">
+		<description>Inverse for Voliro</description>
+	</class>
 </library>
