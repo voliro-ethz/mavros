@@ -42,10 +42,11 @@ private:
 		gps_out.alt = raw_gps->fix.altitude * 1000; // [m * 1000] AMSL
 
 		// ??? TODO
-		gps_out.eph = 2;
-		gps_out.epv = 2;
+		gps_out.eph = 1;		//raw_gps->fix.position_covariance[0];  // 1.0 var
+		gps_out.epv = 2;		//raw_gps->fix.position_covariance[8];  // 4.0 var
 
-		// Velocities ! -> Transform
+		// Hardcode
+		gps_out.satellites_visible = 10;
 
 		//  Verify all the Math !!!! TODO
 
@@ -63,9 +64,6 @@ private:
 		gps_out.vn = vn; 												// [m/s] !!
 		gps_out.ve = ve; 												// [m/s] !!
 		gps_out.vd = vd; 												// [m/s] !!
-
-		// Hardcode
-		gps_out.satellites_visible = 5;
 
 		UAS_FCU(m_uas)->send_message_ignore_drop(gps_out);
 	}
