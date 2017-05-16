@@ -47,6 +47,7 @@ private:
 
 		v.takeoff_enabled = sp->takeoff;
 		v.landing_enabled = sp->landing;
+		v.filter_sp_enabled = sp->filter_sp;
 		v.rotorguards_tola_enabled  = sp->rotorguards_tola;
 		v.velocity_enabled = sp->velocity;
 		v.fan_enabled = sp->fan_enabled;
