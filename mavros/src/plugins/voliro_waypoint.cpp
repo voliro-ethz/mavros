@@ -50,6 +50,7 @@ private:
 		v.filter_sp_enabled = sp->filter_sp;
 		v.rotorguards_tola_enabled  = sp->rotorguards_tola;
 		v.velocity_enabled = sp->velocity;
+		v.reset_integrals = sp->reset_integrals;
 		v.fan_enabled = sp->fan_enabled;
 
 

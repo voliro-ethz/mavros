@@ -4,4 +4,5 @@ bool landing
 bool rotorguards_tola
 bool filter_sp
 bool velocity
+bool reset_integrals
 bool fan_enabled
