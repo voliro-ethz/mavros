@@ -51,6 +51,7 @@ private:
 		v.rotorguards_tola_enabled  = sp->rotorguards_tola;
 		v.velocity_enabled = sp->velocity;
 		v.reset_integrals = sp->reset_integrals;
+		v.manual_position = sp->manual_position;
 		v.fan_enabled = sp->fan_enabled;
 
 
