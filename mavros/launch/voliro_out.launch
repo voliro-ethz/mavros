@@ -26,4 +26,7 @@
 
 	<node name="master_discovery" pkg="node_manager_fkie" type="remote_nm.py" args="--package master_discovery_fkie --node_type master_discovery --node_name /master_discovery _mcast_port:=11511 _mcast_group:=226.0.0.0 _robot_hosts:=[] _heartbeat_hz:=0.5 __name:=master_discovery"/>
 
+  <node pkg="gps_reach" type="combine" name="combine"/>
+	<node pkg="nmea_tcp_driver" type="nmea_tcp_driver" name="nmea_tcp_driver"/>  <!-- Richtig?-->
+
 </launch>
