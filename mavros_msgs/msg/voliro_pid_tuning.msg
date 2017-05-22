@@ -1,4 +1,5 @@
 bool valid
+float32   COG_OFFSET
 float32   XY_POS_P
 float32   XY_POS_I
 float32   XY_POS_D
