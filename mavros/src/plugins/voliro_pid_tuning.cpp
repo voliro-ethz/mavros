@@ -32,6 +32,7 @@ private:
 	{
 		mavlink::common::msg::VOLIRO_PID_TUNING msg_out;
 		msg_out.valid    = msg_in->valid;
+		msg_out.cog_offset = msg_in->COG_OFFSET;
 	  msg_out.xy_pos_p = msg_in->XY_POS_P;
 	  msg_out.xy_pos_i = msg_in->XY_POS_I;
 	  msg_out.xy_pos_d = msg_in->XY_POS_D;
