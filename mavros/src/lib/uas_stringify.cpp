@@ -132,6 +132,7 @@ static const cmode_map px4_cmode_map{{
 	{ px4::define_mode(px4::custom_mode::MAIN_MODE_RATTITUDE),        "RATTITUDE" },
 	{ px4::define_mode(px4::custom_mode::MAIN_MODE_VOL_AUTO),         "VOL_AUTO" },
 	{ px4::define_mode(px4::custom_mode::MAIN_MODE_VOL_MANUAL),       "VOL_MANUAL" },
+	{ px4::define_mode(px4::custom_mode::MAIN_MODE_VOL_BALLBOT),       "VOL_BALLBOT" },
 	{ px4::define_mode_auto(px4::custom_mode::SUB_MODE_AUTO_MISSION), "AUTO.MISSION" },
 	{ px4::define_mode_auto(px4::custom_mode::SUB_MODE_AUTO_LOITER),  "AUTO.LOITER" },
 	{ px4::define_mode_auto(px4::custom_mode::SUB_MODE_AUTO_RTL),     "AUTO.RTL" },
