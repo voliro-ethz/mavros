@@ -63,15 +63,7 @@ private:
   bool _sending_fullstate;
   bool _sending_shortstate;
 
-  void handle_ballbot(
-    const mavlink::mavlink_message_t *msg,
-    mavlink::common::msg::VOLIRO_BALLBOT_FULLSTATE&
-    msg_ballbot_fullstate)
 
-  ros::Publisher ballbot_fullstate_pub;
-
-  bool has_voliro_ballbot;
-  std::string frame_id;
 
 void handle_ballbot(const mavlink::mavlink_message_t   *msg,
                            mavlink::common::msg::VOLIRO_BALLBOT_FULLSTATE& msg_ballbot_fullstate)
