@@ -2,4 +2,9 @@ geometry_msgs/PoseStamped posestamped
 bool takeoff
 bool landing
 bool rotorguards_tola
+bool filter_sp
 bool velocity
+bool reset_integrals
+bool unwinding
+bool fan_enabled
+bool manual_position

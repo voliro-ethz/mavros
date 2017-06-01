@@ -13,9 +13,9 @@ class BALLBOTPlugin : public plugin::PluginBase {
 public:
 
   BALLBOTPlugin() : PluginBase(),
-                    volo_nh("~voliro"),
-                    has_voliro_ballbot(false)
-  {}
+
+                      volo_nh("~voliro"),
+                      has_voliro_ballbot(false)  {}
 
   void initialize(UAS& uas_)
   {
@@ -36,6 +36,10 @@ public:
 
     _sending_fullstate =false;
     _sending_shortstate=false;
+
+    ballbot_fullstate_pub = volo_nh.advertise<mavros_msgs::voliro_ballbot>("voliro_ballbot_fullstate", 10);
+    volo_nh.param<std::string>("frame_id", frame_id, "base_link");
+
     // reset has_* flags on connection change
     enable_connection_cb();
   }
@@ -63,6 +67,14 @@ private:
     const mavlink::mavlink_message_t *msg,
     mavlink::common::msg::VOLIRO_BALLBOT_FULLSTATE&
     msg_ballbot_fullstate)
+
+  ros::Publisher ballbot_fullstate_pub;
+
+  bool has_voliro_ballbot;
+  std::string frame_id;
+
+void handle_ballbot(const mavlink::mavlink_message_t   *msg,
+                           mavlink::common::msg::VOLIRO_BALLBOT_FULLSTATE& msg_ballbot_fullstate)
   {
     ROS_INFO_COND_NAMED(!has_voliro_ballbot,
                         "voliro",
@@ -156,6 +168,7 @@ private:
     }
     UAS_FCU(m_uas)->send_message_ignore_drop(shortstate_out);
   }
+
   void connection_cb(bool connected) override
   {
     has_voliro_ballbot = false;
