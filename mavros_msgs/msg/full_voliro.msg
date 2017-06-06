@@ -10,3 +10,7 @@ bool reset_integrals
 bool unwinding
 bool fan_enabled
 bool manual_position
+bool winding
+bool wall
+bool intuitive_control
+uint8 bird
