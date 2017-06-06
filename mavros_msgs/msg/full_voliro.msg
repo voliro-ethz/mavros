@@ -1,7 +1,9 @@
 geometry_msgs/PoseStamped posestamped
+geometry_msgs/TwistStamped twiststamped
 bool takeoff
 bool landing
 bool rotorguards_tola
+bool headless
 bool filter_sp
 bool velocity
 bool reset_integrals
