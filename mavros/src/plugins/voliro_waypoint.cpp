@@ -65,6 +65,10 @@ Eigen::Vector3d twb(tw(3),tw(4),tw(5));
 		v.unwinding = sp->unwinding;
 		v.manual_position = sp->manual_position;
 		v.fan_enabled = sp->fan_enabled;
+		v.winding = sp->winding;
+		v.wall = sp->wall;
+		v.intuitive_control = sp->intuitive_control;
+		v.bird = sp->bird;
 
 		v.x = p.x();
 		v.y = p.y();
