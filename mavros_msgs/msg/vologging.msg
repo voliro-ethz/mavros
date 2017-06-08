@@ -8,3 +8,12 @@ float32[4] port_A_6
 float32[4] port_A_7
 float32[4] port_A_8
 float32[4] port_A_9
+float32[4] port_B_1
+float32[4] port_B_2
+float32[4] port_B_3
+float32[4] port_B_4
+float32[4] port_B_5
+float32[4] port_B_6
+float32[4] port_B_7
+float32[4] port_B_8
+float32[4] port_B_9

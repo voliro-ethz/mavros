@@ -1,1 +1,1 @@
-float32[6] alpha
+float32[7] alpha

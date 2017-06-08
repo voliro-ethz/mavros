@@ -1,6 +1,16 @@
 geometry_msgs/PoseStamped posestamped
+geometry_msgs/TwistStamped twiststamped
 bool takeoff
 bool landing
 bool wall
 bool rotorguards_tola
+bool headless
+bool filter_sp
 bool velocity
+bool reset_integrals
+bool unwinding
+bool fan_enabled
+bool manual_position
+bool winding
+bool intuitive_control
+uint8 bird
