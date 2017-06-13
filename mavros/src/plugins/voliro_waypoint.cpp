@@ -95,6 +95,7 @@ Eigen::Vector3d twb(tw(3),tw(4),tw(5));
 		v.pitch_rate= s.y();
 		v.yaw_rate= s.z();
 
+		v.wallposition=sp->wallposition;
 		v.wallpoint[0]=sp->wallpoint[1];
 		v.wallpoint[1]=sp->wallpoint[0]; 	//ENU to NED transformation
 		v.wallvector[0]=sp->wallvector[1];

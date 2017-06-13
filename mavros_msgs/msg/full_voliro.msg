@@ -2,6 +2,7 @@ geometry_msgs/PoseStamped posestamped
 geometry_msgs/TwistStamped twiststamped
 float32[2] wallpoint
 float32[2] wallvector
+float32 wallposition
 bool takeoff
 bool landing
 bool wall
