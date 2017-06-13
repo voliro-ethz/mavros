@@ -13,4 +13,6 @@ bool manual_position
 bool winding
 bool wall
 bool intuitive_control
+bool absolute_enabled
+bool horizontalize_enabled
 uint8 bird
