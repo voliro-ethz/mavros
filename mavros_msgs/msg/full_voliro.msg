@@ -1,7 +1,11 @@
 geometry_msgs/PoseStamped posestamped
 geometry_msgs/TwistStamped twiststamped
+float32[2] wallpoint
+float32[2] wallvector
+float32 wallposition
 bool takeoff
 bool landing
+bool wall
 bool rotorguards_tola
 bool headless
 bool filter_sp
@@ -11,6 +15,5 @@ bool unwinding
 bool fan_enabled
 bool manual_position
 bool winding
-bool wall
 bool intuitive_control
 uint8 bird
