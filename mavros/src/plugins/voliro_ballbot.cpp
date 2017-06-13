@@ -3,6 +3,8 @@
 // #include <mavros_msgs/voliro_alpha.h>
 // #include <mavros_msgs/voliro_ao.h>
 #include <mavros_msgs/voliro_ballbot.h>
+#include <mavros_msgs/voliro_ballbot_matrix.h>
+
 
 namespace mavros {
 namespace std_plugins {
@@ -34,8 +36,15 @@ public:
                                      &BALLBOTPlugin::voliro_shortstate_cb,
                                      this);
 
+   voliro_sub_matrix = volo_nh.subscribe("voliro_ballbot_LQR_matrices",
+                                    1,
+                                    &BALLBOTPlugin::voliro_matrix_cb,
+                                    this);
+
     _sending_fullstate =false;
     _sending_shortstate=false;
+
+    _sentLast          = ros::Time::now();
 
     ballbot_fullstate_pub = volo_nh.advertise<mavros_msgs::voliro_ballbot>("voliro_ballbot_fullstate", 10);
     volo_nh.param<std::string>("frame_id", frame_id, "base_link");
@@ -56,13 +65,16 @@ private:
   ros::Publisher  ballbot_fullstate_pub;
   ros::Subscriber voliro_sub_full;
   ros::Subscriber voliro_sub_short;
+  ros::Subscriber voliro_sub_matrix;
+
 
 
   bool has_voliro_ballbot;
   std::string frame_id;
   bool _sending_fullstate;
   bool _sending_shortstate;
-
+  mavros_msgs::voliro_ballbot _fullstate;
+  ros::Time _sentLast;
 
 
 void handle_ballbot(const mavlink::mavlink_message_t   *msg,
@@ -153,12 +165,42 @@ void handle_ballbot(const mavlink::mavlink_message_t   *msg,
 		shortstate_out.target_system = 1;
 		shortstate_out.target_component = 1;
 
+    _fullstate                = fullstate_in;
     //Check for double Sending
     _sending_shortstate=true;
     if(_sending_fullstate && _sending_shortstate){
       ROS_WARN_STREAM("Both full and short reference is sent to px4. This could lead to unwanted behaviour");
     }
     UAS_FCU(m_uas)->send_message_ignore_drop(shortstate_out);
+  }
+
+  void voliro_matrix_cb(const mavros_msgs::voliro_ballbot_matrix matrix_in) {
+    mavlink::common::msg::VOLIRO_BALLBOT_LQR_MATRIX matrix_out;
+    mavlink::common::msg::VOLIRO_BALLBOT_INTEGRATOR_MATRIX matrix_out_int;
+    for(int i=0; i<8; ++i){
+        matrix_out.K_u_1[i] = matrix_in.K_u_1[i];
+        matrix_out.K_u_2[i] = matrix_in.K_u_2[i];
+        matrix_out.K_u_3[i] = matrix_in.K_u_3[i];
+        matrix_out.K_u_4[i] = matrix_in.K_u_4[i];
+        matrix_out.K_u_5[i] = matrix_in.K_u_5[i];
+        matrix_out.K_u_6[i] = matrix_in.K_u_6[i];
+    }
+    for(int i=0; i<4; ++i){
+        matrix_out_int.K_i_1[i] = matrix_in.K_i_1[i];
+        matrix_out_int.K_i_2[i] = matrix_in.K_i_2[i];
+        matrix_out_int.K_i_3[i] = matrix_in.K_i_3[i];
+        matrix_out_int.K_i_4[i] = matrix_in.K_i_4[i];
+        matrix_out_int.K_i_5[i] = matrix_in.K_i_5[i];
+        matrix_out_int.K_i_6[i] = matrix_in.K_i_6[i];
+    }
+    if(_fullstate.flag1  && (ros::Time::now()-_sentLast)>ros::Duration(3.0)){
+      UAS_FCU(m_uas)->send_message_ignore_drop(matrix_out);
+      UAS_FCU(m_uas)->send_message_ignore_drop(matrix_out_int);
+      ROS_WARN_STREAM("Matrices are sent to Ballbot");
+      ROS_WARN_STREAM("Element 0,2" << matrix_out.K_u_1[2]);
+
+      _sentLast     = ros::Time::now();
+    }
   }
 
   void connection_cb(bool connected) override

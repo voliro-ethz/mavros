@@ -42,6 +42,7 @@ add_message_files(
   full_voliro.msg
   vologging.msg
   voliro_ballbot.msg
+  voliro_ballbot_matrix.msg
   voliro_pid_tuning.msg
   full_gps.msg
 )
