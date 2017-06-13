@@ -101,6 +101,7 @@ Eigen::Vector3d twb(tw(3),tw(4),tw(5));
 		v.wallvector[0]=sp->wallvector[1];
 		v.wallvector[1]=sp->wallvector[0];
 
+
 		UAS_FCU(m_uas)->send_message_ignore_drop(v);
 	}
 
