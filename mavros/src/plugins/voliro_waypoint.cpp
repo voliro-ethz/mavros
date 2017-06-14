@@ -35,6 +35,12 @@ private:
 		Eigen::Affine3d tr;
 		tf::poseMsgToEigen(sp->posestamped.pose, tr);
 
+		// Eigen::Affine3d wallpoint;
+		// tf::poseMsgToEigen(sp->wallpoint.pose, wallpoint);
+		//
+		// Eigen::Affine3d wallvector;
+		// tf::poseMsgToEigen(sp->wallvector.pose, wallvector);
+
 		Eigen::Matrix<double,6,1> tw;
 		tf::twistMsgToEigen(sp->twiststamped.twist, tw);
 
@@ -49,7 +55,8 @@ Eigen::Vector3d twb(tw(3),tw(4),tw(5));
 
 	auto r = ftf::transform_frame_enu_ned(twa);
 	auto s = ftf::transform_frame_enu_ned(twb);
-
+	// auto t = ftf::transform_frame_enu_ned(Eigen::Vector3d(wallpoint.translation()));
+	// auto u = ftf::transform_frame_enu_ned(Eigen::Vector3d(wallvector.translation()));
 
 		v.time_boot_ms = sp->posestamped.header.stamp.toNSec() / 1000000;
 		v.target_system = 1;
@@ -57,6 +64,7 @@ Eigen::Vector3d twb(tw(3),tw(4),tw(5));
 
 		v.takeoff_enabled = sp->takeoff;
 		v.landing_enabled = sp->landing;
+		v.wall_enabled = sp->wall;
 		v.filter_sp_enabled = sp->filter_sp;
 		v.rotorguards_tola_enabled  = sp->rotorguards_tola;
 		v.headless_enabled=sp->headless;
@@ -66,8 +74,9 @@ Eigen::Vector3d twb(tw(3),tw(4),tw(5));
 		v.manual_position = sp->manual_position;
 		v.fan_enabled = sp->fan_enabled;
 		v.winding = sp->winding;
-		v.wall = sp->wall;
 		v.intuitive_control = sp->intuitive_control;
+		v.absolute_enabled = sp->absolute_enabled;
+		v.horizontalize_enabled = sp->horizontalize_enabled;
 		v.bird = sp->bird;
 
 		v.x = p.x();
@@ -87,6 +96,12 @@ Eigen::Vector3d twb(tw(3),tw(4),tw(5));
 		v.roll_rate= s.x();
 		v.pitch_rate= s.y();
 		v.yaw_rate= s.z();
+
+		v.wallposition=sp->wallposition;
+		v.wallpoint[0]=sp->wallpoint[1];
+		v.wallpoint[1]=sp->wallpoint[0]; 	//ENU to NED transformation
+		v.wallvector[0]=sp->wallvector[1];
+		v.wallvector[1]=sp->wallvector[0];
 
 
 		UAS_FCU(m_uas)->send_message_ignore_drop(v);
