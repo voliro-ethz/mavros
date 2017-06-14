@@ -75,6 +75,8 @@ Eigen::Vector3d twb(tw(3),tw(4),tw(5));
 		v.fan_enabled = sp->fan_enabled;
 		v.winding = sp->winding;
 		v.intuitive_control = sp->intuitive_control;
+		v.absolute_enabled = sp->absolute_enabled;
+		v.horizontalize_enabled = sp->horizontalize_enabled;
 		v.bird = sp->bird;
 
 		v.x = p.x();

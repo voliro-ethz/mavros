@@ -16,4 +16,6 @@ bool fan_enabled
 bool manual_position
 bool winding
 bool intuitive_control
+bool absolute_enabled
+bool horizontalize_enabled
 uint8 bird
