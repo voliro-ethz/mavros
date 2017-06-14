@@ -193,7 +193,7 @@ void handle_ballbot(const mavlink::mavlink_message_t   *msg,
         matrix_out_int.K_i_5[i] = matrix_in.K_i_5[i];
         matrix_out_int.K_i_6[i] = matrix_in.K_i_6[i];
     }
-    if(_fullstate.flag1  && (ros::Time::now()-_sentLast)>ros::Duration(3.0)){
+    if(_fullstate.flag1  && (ros::Time::now()-_sentLast)>ros::Duration(1.0)){
       UAS_FCU(m_uas)->send_message_ignore_drop(matrix_out);
       UAS_FCU(m_uas)->send_message_ignore_drop(matrix_out_int);
       ROS_WARN_STREAM("Matrices are sent to Ballbot");
