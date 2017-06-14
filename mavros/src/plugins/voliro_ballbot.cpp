@@ -197,7 +197,7 @@ void handle_ballbot(const mavlink::mavlink_message_t   *msg,
       UAS_FCU(m_uas)->send_message_ignore_drop(matrix_out);
       UAS_FCU(m_uas)->send_message_ignore_drop(matrix_out_int);
       ROS_WARN_STREAM("Matrices are sent to Ballbot");
-      ROS_WARN_STREAM("Element 0,2" << matrix_out.K_u_1[2]);
+      //ROS_WARN_STREAM("Element 0,2:  " << matrix_out.K_u_1[2]);
 
       _sentLast     = ros::Time::now();
     }
