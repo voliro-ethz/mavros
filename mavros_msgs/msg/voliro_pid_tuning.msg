@@ -2,6 +2,8 @@ bool valid
 float32   COG_OFFSET
 float32   SWITCH_LB
 float32   SWITCH_UB
+float32   A_LB
+float32   A_UB
 float32   XY_POS_P
 float32   XY_POS_I
 float32   XY_POS_D
