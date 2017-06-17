@@ -43,6 +43,7 @@ add_message_files(
   vologging.msg
   voliro_ballbot.msg
   voliro_pid_tuning.msg
+  follow.msg
 )
 
 add_service_files(
